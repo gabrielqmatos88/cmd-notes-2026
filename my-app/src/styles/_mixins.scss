@@ -1,5 +1,5 @@
 // SCSS Mixins
-@import 'variables';
+@use 'variables' as *;
 
 // Responsive Breakpoints
 @mixin mobile {

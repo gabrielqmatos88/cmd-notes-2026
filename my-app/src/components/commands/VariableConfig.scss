@@ -1,0 +1,167 @@
+// VariableConfig Styles
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.variable-config {
+  @include card;
+  padding: $space-xl;
+
+  &__header {
+    margin-bottom: $space-xl;
+  }
+
+  &__title {
+    margin: 0 0 $space-xs 0;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-xl;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__empty {
+    padding: $space-xl;
+    text-align: center;
+    color: $text-muted;
+    background-color: $bg-secondary;
+    border-radius: $radius-md;
+  }
+
+  &__item {
+    background-color: $bg-secondary;
+    border: 1px solid $border-light;
+    border-radius: $radius-md;
+    overflow: hidden;
+  }
+
+  &__item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-sm $space-md;
+    background-color: rgba($primary, 0.05);
+    border-bottom: 1px solid $border-light;
+  }
+
+  &__item-name {
+    font-weight: $font-weight-semibold;
+    color: $primary;
+    font-size: $font-size-sm;
+  }
+
+  &__item-placeholder {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: $font-size-xs;
+    color: $text-muted;
+  }
+
+  &__item-body {
+    padding: $space-md;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+  }
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+  }
+
+  &__input,
+  &__select {
+    @include input-base;
+    font-size: $font-size-sm;
+  }
+
+  &__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-xs;
+  }
+
+  &__option {
+    padding: $space-xs $space-sm;
+    font-size: $font-size-xs;
+    background-color: $bg-tertiary;
+    border-radius: $radius-sm;
+    color: $text-secondary;
+  }
+
+  &__no-options {
+    font-size: $font-size-xs;
+    color: $text-muted;
+    font-style: italic;
+  }
+
+  &__preview {
+    position: sticky;
+    top: $space-md;
+    align-self: start;
+  }
+
+  &__preview-title {
+    margin: 0 0 $space-md 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+
+  &__preview-box {
+    background-color: $bg-dark;
+    border-radius: $radius-md;
+    padding: $space-md;
+    min-height: 100px;
+    border: 1px solid $border-dark;
+
+    code {
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: $font-size-sm;
+      color: #e2e8f0;  // Light slate for better visibility on dark bg
+      word-break: break-all;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+  }
+
+  &__preview-hint {
+    margin: $space-sm 0 0 0;
+    font-size: $font-size-xs;
+    color: $text-muted;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-sm;
+    margin-top: $space-xl;
+    padding-top: $space-lg;
+    border-top: 1px solid $border-light;
+  }
+}

@@ -1,6 +1,6 @@
 // AppLayout Component Styles
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .app-layout {
     height: 100%;

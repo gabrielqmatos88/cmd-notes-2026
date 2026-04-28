@@ -1,6 +1,6 @@
 // MainContent Component Styles
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .main-content {
     flex: 1;

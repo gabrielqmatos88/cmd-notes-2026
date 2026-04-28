@@ -191,3 +191,28 @@ export const detectVariableType = (name) => {
   
   return 'text';
 };
+
+/**
+ * Format a variable name into a user-friendly label
+ * Splits on underscores and capitalizes each word
+ * @param {string} name - Variable name (e.g., 'output_file')
+ * @returns {string} Formatted label (e.g., 'Output File:')
+ * 
+ * @example
+ * formatVariableLabel('output_file') // Returns: 'Output File:'
+ * formatVariableLabel('userName') // Returns: 'UserName:'
+ * formatVariableLabel('port_number') // Returns: 'Port Number:'
+ */
+export const formatVariableLabel = (name) => {
+  if (!name || typeof name !== 'string') {
+    return '';
+  }
+  
+  // Split on underscores and capitalize first letter of each word
+  const formatted = name
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+  
+  return `${formatted}:`;
+};

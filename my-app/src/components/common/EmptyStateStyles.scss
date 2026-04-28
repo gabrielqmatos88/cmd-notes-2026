@@ -1,0 +1,35 @@
+// EmptyState Styles
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.empty-state {
+  @include flex-center;
+  @include flex-column;
+  gap: $space-md;
+  padding: $space-3xl;
+  text-align: center;
+  color: $text-muted;
+
+  &__icon {
+    opacity: 0.4;
+    color: $secondary;
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+  }
+
+  &__description {
+    margin: 0;
+    font-size: $font-size-sm;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+}

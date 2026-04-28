@@ -1,6 +1,6 @@
 // Sidebar Component Styles
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .sidebar {
   width: $sidebar-width;
@@ -136,6 +136,26 @@
     letter-spacing: 0.05em;
   }
 
+  &__section-actions {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+  }
+
+  &__sort-select {
+    padding: $space-xs $space-sm;
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    background-color: $bg-secondary;
+    border: 1px solid $border-light;
+    border-radius: $radius-sm;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $border-medium;
+    }
+  }
+
   &__add-btn {
     @include button-base;
     padding: $space-xs;
@@ -189,6 +209,29 @@
     &-count {
       font-size: $font-size-xs;
       color: $text-muted;
+    }
+
+    &--selected {
+      background-color: rgba($primary, 0.1);
+      border: 1px solid rgba($primary, 0.3);
+    }
+
+    &-delete {
+      @include button-base;
+      padding: $space-xs;
+      color: $text-muted;
+      background: transparent;
+      opacity: 0;
+      margin-left: auto;
+
+      &:hover {
+        color: $danger;
+        background-color: rgba($danger, 0.1);
+      }
+    }
+
+    &:hover &-delete {
+      opacity: 1;
     }
   }
 

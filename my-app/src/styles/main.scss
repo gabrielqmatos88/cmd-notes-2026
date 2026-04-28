@@ -1,8 +1,8 @@
 // Main Styles Entry Point
-@import 'variables';
-@import 'typography';
-@import 'mixins';
-@import 'components';
+@use 'variables' as *;
+@use 'typography';
+@use 'mixins' as *;
+@use 'components';
 
 // CSS Reset
 *, *::before, *::after {

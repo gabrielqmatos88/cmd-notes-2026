@@ -99,39 +99,39 @@
 ### Phase 3: Command Management
 
 #### 3.1 Command List View
-- [ ] Create `CommandList` component
-- [ ] Display all commands in sidebar/list
-- [ ] Add search/filter functionality
-- [ ] Add sorting options (recent, alphabetical)
-- [ ] Implement delete command with confirmation
+- [x] Create `CommandList` component (integrated in Sidebar)
+- [x] Display all commands in sidebar/list
+- [x] Add search/filter functionality
+- [x] Add sorting options (recent, alphabetical)
+- [x] Implement delete command with confirmation
 
 #### 3.2 Create/Edit Command Screen
-- [ ] Create `CommandForm` component
-- [ ] Fields: command name, description, template
-- [ ] Add "Setup Command" button
-- [ ] Implement form validation
+- [x] Create `CommandForm` component
+- [x] Fields: command name, description, template
+- [x] Add "Setup Command" button
+- [x] Implement form validation
 
 #### 3.3 Variable Configuration Screen
-- [ ] Auto-detect variables when "Setup Command" is clicked
-- [ ] Create `VariableConfig` component for each variable
-- [ ] Configure per-variable options:
+- [x] Auto-detect variables when "Setup Command" is clicked
+- [x] Create `VariableConfig` component for each variable
+- [x] Configure per-variable options:
   - Input type selection (text, number, dropdown)
   - Default value input
   - Data source assignment
-- [ ] Support inline values for dropdowns (`value1;value2;value3`)
-- [ ] Link to global data sources or create embedded sources
-- [ ] Show live preview of generated command
+- [x] Support inline values for dropdowns (`value1;value2;value3`)
+- [x] Link to global data sources or create embedded sources
+- [x] Show live preview of generated command
 
 #### 3.4 Command Execution View
-- [ ] Create `CommandExecutor` component
-- [ ] Render dynamic form based on variable configuration
-- [ ] Implement input components per type:
+- [x] Create `CommandExecutor` component
+- [x] Render dynamic form based on variable configuration
+- [x] Implement input components per type:
   - `TextInput` for text type
   - `NumberInput` for number type
   - `DropdownSelect` for dropdown type
-- [ ] Show generated command in real-time
-- [ ] Add "Copy" button with clipboard API
-- [ ] Store generated command in history
+- [x] Show generated command in real-time
+- [x] Add "Copy" button with clipboard API
+- [x] Store generated command in history
 
 ---
 
