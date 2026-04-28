@@ -1,0 +1,43 @@
+It's a tool to manage command line snippets.
+
+The tool should be able to add, remove and edit commands.
+command:
+"curl -L -o #output_file# #url#"
+
+the `#output_file#` and `#url#` should become variables.
+
+the user will see the command  "curl download file"
+and the variables become user inputs like text inputs, number inputs, dropdowns.
+
+When user is adding a new command, he should write the command with variable sintax to be replaced, variables in command are around "#" e.g: "#username#" => variable username.
+
+So screen should display an input text by default, but user can choose the input type. The input types accept default values.
+E.g: text inputs => "text value"
+number inputs => 1
+dropdown => "a;b;c" // values like csv separated by commas or semi-colons or event data sources
+
+Data sources should be lists of default values that user can create. E.g: a list of ips, a list of usernames. a list of servernames or any other text source user wants.
+
+After save a command and its inputs, the command is available for user search and use it, just like a tool that generate command lines, just filling the inputs.
+The generated command should be the output of command replacing variables by the user inputs
+
+e.g:
+"curl -L -o #output_file# #url#"
+
+output
+"curl -L -o my_new_name.zip https://example.com/file.zip"
+
+The output must have a copy button, to make easier the user generate commands and avoid to remember entire command lines and saving their best commands to use when they want.
+
+The tool name is CMD-Notes.
+
+Other features
+- User can import or export commands as json files.
+- User can use default tools to convert md5, sha-256
+- User can easily share one or all commands
+- The commands should be stored in local storage.
+
+Stack:
+ - Frontend tools developed using React.
+ - Sass scss is preferred.
+
