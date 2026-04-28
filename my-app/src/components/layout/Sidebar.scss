@@ -1,0 +1,201 @@
+// Sidebar Component Styles
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.sidebar {
+  width: $sidebar-width;
+  height: 100%;
+  background-color: $bg-primary;
+  border-right: 1px solid $border-light;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @include mobile {
+    position: fixed;
+    top: $header-height;
+    left: 0;
+    bottom: 0;
+    z-index: $z-modal;
+    transform: translateX(-100%);
+    transition: transform $transition-normal;
+    
+    &--open {
+      transform: translateX(0);
+      box-shadow: $shadow-xl;
+    }
+  }
+
+  &__header {
+    display: none;
+
+    @include mobile {
+      display: flex;
+      justify-content: flex-end;
+      padding: $space-sm;
+      border-bottom: 1px solid $border-light;
+    }
+  }
+
+  &__close-btn {
+    @include button-base;
+    padding: $space-xs;
+    color: $text-secondary;
+    background: transparent;
+
+    &:hover {
+      background-color: $bg-tertiary;
+      color: $text-primary;
+    }
+  }
+
+  &__nav {
+    padding: $space-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+
+    @include desktop {
+      padding: $space-md;
+    }
+  }
+
+  &__nav-item {
+    @include button-base;
+    justify-content: flex-start;
+    padding: $space-sm $space-md;
+    color: $text-secondary;
+    background: transparent;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    text-align: left;
+
+    &:hover {
+      background-color: $bg-tertiary;
+      color: $text-primary;
+    }
+
+    &--active {
+      background-color: rgba($primary, 0.1);
+      color: $primary;
+
+      &:hover {
+        background-color: rgba($primary, 0.15);
+        color: $primary;
+      }
+    }
+
+    span {
+      margin-left: $space-sm;
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: $border-light;
+    margin: 0 $space-md;
+  }
+
+  &__search {
+    position: relative;
+    padding: $space-sm $space-md;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: $space-lg;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $text-muted;
+    pointer-events: none;
+  }
+
+  &__search-input {
+    @include input-base;
+    padding-left: $space-xl;
+    background-color: $bg-secondary;
+  }
+
+  &__section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__section-header {
+    @include flex-between;
+    padding: $space-sm $space-md;
+  }
+
+  &__section-title {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__add-btn {
+    @include button-base;
+    padding: $space-xs;
+    color: $text-secondary;
+    background: transparent;
+
+    &:hover {
+      background-color: $bg-tertiary;
+      color: $primary;
+    }
+  }
+
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 $space-sm;
+  }
+
+  &__list-item {
+    @include button-base;
+    justify-content: flex-start;
+    width: 100%;
+    padding: $space-sm $space-md;
+    margin-bottom: $space-xs;
+    background-color: $bg-secondary;
+    border-radius: $radius-md;
+    text-align: left;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+
+    &:hover {
+      background-color: $bg-tertiary;
+    }
+
+    &-name {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $text-primary;
+      @include truncate;
+      max-width: 100%;
+    }
+
+    &-desc {
+      font-size: $font-size-xs;
+      color: $text-muted;
+      @include truncate;
+      max-width: 100%;
+    }
+
+    &-count {
+      font-size: $font-size-xs;
+      color: $text-muted;
+    }
+  }
+
+  &__empty {
+    padding: $space-lg;
+    text-align: center;
+    color: $text-muted;
+    font-size: $font-size-sm;
+  }
+}

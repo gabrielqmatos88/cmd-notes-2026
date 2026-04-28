@@ -1,0 +1,72 @@
+// Header Component Styles
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.header {
+  @include flex-between;
+  height: $header-height;
+  padding: 0 $space-md;
+  background-color: $bg-primary;
+  border-bottom: 1px solid $border-light;
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+
+  &__left {
+    @include flex-center;
+    gap: $space-sm;
+  }
+
+  &__brand {
+    @include flex-center;
+    gap: $space-sm;
+  }
+
+  &__logo {
+    color: $primary;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin: 0;
+  }
+
+  &__menu-btn {
+    @include button-base;
+    padding: $space-xs;
+    color: $text-secondary;
+    background: transparent;
+    
+    &:hover {
+      background-color: $bg-tertiary;
+      color: $text-primary;
+    }
+
+    @include desktop {
+      display: none;
+    }
+  }
+
+  &__right {
+    @include flex-center;
+    gap: $space-sm;
+  }
+
+  &__action-btn {
+    @include button-base;
+    padding: $space-sm;
+    color: $text-secondary;
+    background: transparent;
+    
+    &:hover {
+      background-color: $bg-tertiary;
+      color: $text-primary;
+    }
+  }
+
+  @include desktop {
+    padding: 0 $space-lg;
+  }
+}

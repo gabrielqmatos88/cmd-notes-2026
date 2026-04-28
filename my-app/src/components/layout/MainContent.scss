@@ -1,0 +1,54 @@
+// MainContent Component Styles
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: $bg-secondary;
+
+    &__header {
+        @include flex-between;
+        padding: $space-lg $space-xl;
+        background-color: $bg-primary;
+        border-bottom: 1px solid $border-light;
+
+        @include desktop {
+            padding: $space-xl $space-2xl;
+        }
+    }
+
+    &__header-text {
+        flex: 1;
+    }
+
+    &__title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        margin: 0 0 $space-xs;
+    }
+
+    &__subtitle {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        margin: 0;
+    }
+
+    &__actions {
+        @include flex-center;
+        gap: $space-sm;
+    }
+
+    &__body {
+        flex: 1;
+        overflow-y: auto;
+        padding: $space-lg;
+
+        @include desktop {
+            padding: $space-xl $space-2xl;
+        }
+    }
+}

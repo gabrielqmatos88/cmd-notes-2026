@@ -60,15 +60,15 @@
 ### Phase 2: Core Infrastructure
 
 #### 2.1 Type Definitions
-- [ ] Define `Variable` interface (name, inputType, defaultValue, dataSource)
-- [ ] Define `DataSource` interface (id, name, values[])
-- [ ] Define `Command` interface (id, name, description, template, variables[], createdAt, updatedAt)
-- [ ] Define `CommandHistory` interface (id, commandId, generatedCommand, timestamp)
-- [ ] Define `AppSettings` interface (historyEnabled, maxHistoryItems)
+- [x] Define `Variable` interface (name, inputType, defaultValue, dataSource)
+- [x] Define `DataSource` interface (id, name, values[])
+- [x] Define `Command` interface (id, name, description, template, variables[], createdAt, updatedAt)
+- [x] Define `CommandHistory` interface (id, commandId, generatedCommand, timestamp)
+- [x] Define `AppSettings` interface (historyEnabled, maxHistoryItems)
 
 #### 2.2 LocalStorage Service
-- [ ] Create storage keys constants
-- [ ] Implement `StorageService` class with methods:
+- [x] Create storage keys constants
+- [x] Implement `StorageService` class with methods:
   - `getCommands()`: Get all commands
   - `saveCommand(command)`: Create or update command
   - `deleteCommand(id)`: Remove command
@@ -82,17 +82,17 @@
   - `saveSettings(settings)`: Update settings
 
 #### 2.3 Utility Functions
-- [ ] Implement `parseVariables(template)`: Extract #variable# names from template
-- [ ] Implement `replaceVariables(template, values)`: Substitute variables with values
-- [ ] Implement `encodeForUrl(data)`: Base64 encode for shareable links
-- [ ] Implement `decodeFromUrl(encoded)`: Decode shareable link data
-- [ ] Implement `validateTemplate(template)`: Check for malformed variables
+- [x] Implement `parseVariables(template)`: Extract #variable# names from template
+- [x] Implement `replaceVariables(template, values)`: Substitute variables with values
+- [x] Implement `encodeForUrl(data)`: Base64 encode for shareable links
+- [x] Implement `decodeFromUrl(encoded)`: Decode shareable link data
+- [x] Implement `validateTemplate(template)`: Check for malformed variables
 
 #### 2.4 Basic Layout Components
-- [ ] Create `Header` component (app title, navigation)
-- [ ] Create `Sidebar` component (commands list, data sources, tools)
-- [ ] Create `MainContent` component (dynamic content area)
-- [ ] Create `AppLayout` wrapper component
+- [x] Create `Header` component (app title, navigation)
+- [x] Create `Sidebar` component (commands list, data sources, tools)
+- [x] Create `MainContent` component (dynamic content area)
+- [x] Create `AppLayout` wrapper component
 
 ---
 
