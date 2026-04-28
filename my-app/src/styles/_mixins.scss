@@ -1,0 +1,170 @@
+// SCSS Mixins
+@import 'variables';
+
+// Responsive Breakpoints
+@mixin mobile {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $breakpoint-sm) and (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+// Flexbox Utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Button Styles
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  padding: $space-sm $space-md;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: $primary;
+  color: $text-inverse;
+  
+  &:hover:not(:disabled) {
+    background-color: $primary-dark;
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: $bg-tertiary;
+  color: $text-primary;
+  
+  &:hover:not(:disabled) {
+    background-color: $border-light;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background-color: $danger;
+  color: $text-inverse;
+  
+  &:hover:not(:disabled) {
+    background-color: $danger-dark;
+  }
+}
+
+// Input Styles
+@mixin input-base {
+  width: 100%;
+  padding: $space-sm $space-md;
+  font-family: $font-family-base;
+  font-size: $font-size-sm;
+  color: $text-primary;
+  background-color: $bg-primary;
+  border: 1px solid $border-light;
+  border-radius: $radius-md;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.15);
+  }
+  
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+// Card Styles
+@mixin card {
+  background-color: $bg-primary;
+  border: 1px solid $border-light;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+}
+
+// Scrollbar
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $bg-tertiary;
+    border-radius: $radius-full;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $border-medium;
+    border-radius: $radius-full;
+    
+    &:hover {
+      background: $border-dark;
+    }
+  }
+}
+
+// Truncate text
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Visually hidden (for accessibility)
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,235 @@
+// Common Component Styles
+@import 'variables';
+@import 'mixins';
+
+// Buttons
+.btn {
+  @include button-base;
+  
+  &--primary {
+    @include button-primary;
+  }
+  
+  &--secondary {
+    @include button-secondary;
+  }
+  
+  &--danger {
+    @include button-danger;
+  }
+  
+  &--sm {
+    padding: $space-xs $space-sm;
+    font-size: $font-size-xs;
+  }
+  
+  &--lg {
+    padding: $space-md $space-lg;
+    font-size: $font-size-base;
+  }
+  
+  &--icon {
+    padding: $space-sm;
+    border-radius: $radius-md;
+  }
+}
+
+// Inputs
+.input {
+  @include input-base;
+}
+
+.textarea {
+  @include input-base;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.select {
+  @include input-base;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-sm center;
+  background-size: 16px;
+  padding-right: $space-xl;
+}
+
+// Checkbox & Radio
+.checkbox,
+.radio {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  cursor: pointer;
+  
+  input {
+    @include visually-hidden;
+    
+    &:checked + .checkmark {
+      background-color: $primary;
+      border-color: $primary;
+      
+      &::after {
+        display: block;
+      }
+    }
+  }
+  
+  .checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid $border-medium;
+    border-radius: $radius-sm;
+    transition: all $transition-fast;
+    @include flex-center;
+    
+    &::after {
+      content: '';
+      display: none;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      margin-bottom: 2px;
+    }
+  }
+}
+
+.radio .checkmark {
+  border-radius: 50%;
+  
+  &::after {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    transform: none;
+    margin-bottom: 0;
+  }
+}
+
+// Cards
+.card {
+  @include card;
+  padding: $space-lg;
+}
+
+// Labels
+.label {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+  margin-bottom: $space-xs;
+}
+
+// Badge
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-xs $space-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-full;
+  
+  &--primary {
+    background-color: rgba($primary, 0.1);
+    color: $primary;
+  }
+  
+  &--secondary {
+    background-color: rgba($secondary, 0.1);
+    color: $secondary;
+  }
+  
+  &--success {
+    background-color: rgba($success, 0.1);
+    color: $success;
+  }
+  
+  &--danger {
+    background-color: rgba($danger, 0.1);
+    color: $danger;
+  }
+}
+
+// Divider
+.divider {
+  height: 1px;
+  background-color: $border-light;
+  border: none;
+  margin: $space-lg 0;
+}
+
+// Empty State
+.empty-state {
+  @include flex-center;
+  @include flex-column;
+  gap: $space-md;
+  padding: $space-3xl;
+  text-align: center;
+  color: $text-muted;
+  
+  &__icon {
+    font-size: 48px;
+    opacity: 0.5;
+  }
+  
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+  }
+  
+  &__description {
+    font-size: $font-size-sm;
+    max-width: 300px;
+  }
+}
+
+// Tooltip
+.tooltip {
+  position: relative;
+  
+  &__content {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: $space-xs $space-sm;
+    background-color: $bg-dark;
+    color: $text-inverse;
+    font-size: $font-size-xs;
+    border-radius: $radius-sm;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all $transition-fast;
+    z-index: $z-tooltip;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: $bg-dark;
+    }
+  }
+  
+  &:hover &__content {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Scrollable area
+.scrollable {
+  @include custom-scrollbar;
+  overflow: auto;
+}
