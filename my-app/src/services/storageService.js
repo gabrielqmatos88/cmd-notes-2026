@@ -318,6 +318,125 @@ class StorageService {
     localStorage.removeItem(StorageKeys.HISTORY);
     localStorage.removeItem(StorageKeys.SETTINGS);
   }
+
+  // ============ Data Source Export/Import ============
+
+  /**
+   * Export data sources only (as JSON)
+   * @returns {Object} Data sources for export
+   */
+  static exportDataSources() {
+    return {
+      version: 1,
+      type: 'dataSources',
+      exportedAt: Date.now(),
+      dataSources: this.getDataSources(),
+    };
+  }
+
+  /**
+   * Import data sources from JSON
+   * @param {Object} data - Import data
+   * @param {boolean} merge - Whether to merge with existing data
+   * @returns {Object} Import result with count of imported items
+   */
+  static importDataSources(data, merge = false) {
+    if (!data || data.version !== 1) {
+      throw new Error('Invalid import data format');
+    }
+
+    if (!data.dataSources || !Array.isArray(data.dataSources)) {
+      throw new Error('Invalid data sources format');
+    }
+
+    let importedCount = 0;
+
+    if (merge) {
+      // Merge data sources (avoid duplicates by id)
+      const existingDS = this.getDataSources();
+      const existingDSIds = new Set(existingDS.map((ds) => ds.id));
+      const newDS = data.dataSources.filter((ds) => !existingDSIds.has(ds.id));
+      
+      // Update IDs for new data sources to avoid conflicts
+      const updatedNewDS = newDS.map((ds) => ({
+        ...ds,
+        id: generateId(),
+      }));
+      
+      saveToStorage(StorageKeys.DATA_SOURCES, [...existingDS, ...updatedNewDS]);
+      importedCount = updatedNewDS.length;
+    } else {
+      // Replace all data sources
+      saveToStorage(StorageKeys.DATA_SOURCES, data.dataSources);
+      importedCount = data.dataSources.length;
+    }
+
+    return {
+      success: true,
+      importedCount,
+      merge,
+    };
+  }
+
+  /**
+   * Check which data sources are missing from commands
+   * Returns a list of variable configurations that reference deleted data sources
+   * @returns {Array} List of commands with missing data source references
+   */
+  static findMissingDataSources() {
+    const commands = this.getCommands();
+    const dataSources = this.getDataSources();
+    const dsIds = new Set(dataSources.map((ds) => ds.id));
+    
+    const commandsWithMissingRefs = [];
+
+    commands.forEach((command) => {
+      if (!command.variables || command.variables.length === 0) return;
+
+      const missingRefs = command.variables
+        .filter((v) => v.dataSourceId && !dsIds.has(v.dataSourceId))
+        .map((v) => v.name);
+
+      if (missingRefs.length > 0) {
+        commandsWithMissingRefs.push({
+          commandId: command.id,
+          commandName: command.name,
+          missingVariables: missingRefs,
+        });
+      }
+    });
+
+    return commandsWithMissingRefs;
+  }
+
+  /**
+   * Clear references to a deleted data source from all commands
+   * @param {string} dataSourceId - ID of the deleted data source
+   */
+  static clearDataSourceReferences(dataSourceId) {
+    const commands = this.getCommands();
+    let hasChanges = false;
+
+    const updatedCommands = commands.map((cmd) => {
+      if (!cmd.variables || cmd.variables.length === 0) return cmd;
+
+      const updatedVariables = cmd.variables.map((v) => {
+        if (v.dataSourceId === dataSourceId) {
+          hasChanges = true;
+          return { ...v, dataSourceId: null };
+        }
+        return v;
+      });
+
+      return { ...cmd, variables: updatedVariables };
+    });
+
+    if (hasChanges) {
+      saveToStorage(StorageKeys.COMMANDS, updatedCommands);
+    }
+
+    return hasChanges;
+  }
 }
 
 export default StorageService;

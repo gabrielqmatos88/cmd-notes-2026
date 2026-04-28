@@ -6,6 +6,7 @@ import AppLayout from './components/layout/AppLayout';
 import CommandForm from './components/commands/CommandForm';
 import VariableConfig from './components/commands/VariableConfig';
 import CommandExecutor from './components/commands/CommandExecutor';
+import DataSourceList from './components/datasources/DataSourceList';
 import ConfirmModal from './components/common/ConfirmModal';
 import EmptyState from './components/common/EmptyState';
 import StorageService from './services/storageService';
@@ -18,6 +19,7 @@ const SCREENS = {
   COMMAND_FORM: 'commandForm',
   VARIABLE_CONFIG: 'variableConfig',
   COMMAND_EXECUTOR: 'commandExecutor',
+  DATA_SOURCES: 'dataSources',
 };
 
 function App() {
@@ -43,7 +45,11 @@ function App() {
   // Handle view selection
   const handleSelectView = useCallback((view) => {
     setSelectedView(view);
-    setCurrentScreen(SCREENS.WELCOME);
+    if (view === 'dataSources') {
+      setCurrentScreen(SCREENS.DATA_SOURCES);
+    } else {
+      setCurrentScreen(SCREENS.WELCOME);
+    }
     setSelectedCommand(null);
   }, []);
 
@@ -51,6 +57,11 @@ function App() {
   const handleNewCommand = useCallback(() => {
     setSelectedCommand(null);
     setCurrentScreen(SCREENS.COMMAND_FORM);
+  }, []);
+
+  // Handle new data source
+  const handleNewDataSource = useCallback(() => {
+    setCurrentScreen(SCREENS.DATA_SOURCES);
   }, []);
 
   // Handle select command (from sidebar)
@@ -146,6 +157,43 @@ function App() {
     });
   }, []);
 
+  // Data Source handlers
+  const handleSaveDataSource = useCallback((dataSource) => {
+    StorageService.saveDataSource(dataSource);
+    loadData();
+  }, [loadData]);
+
+  const handleDeleteDataSource = useCallback((dataSourceId) => {
+    // Clear references to this data source in commands
+    StorageService.clearDataSourceReferences(dataSourceId);
+    // Delete the data source
+    StorageService.deleteDataSource(dataSourceId);
+    loadData();
+  }, [loadData]);
+
+  const handleExportDataSources = useCallback(() => {
+    const data = StorageService.exportDataSources();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `datasources-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, []);
+
+  const handleImportDataSources = useCallback((data) => {
+    try {
+      const result = StorageService.importDataSources(data, true);
+      loadData();
+      alert(`Successfully imported ${result.importedCount} data source(s).`);
+    } catch (error) {
+      alert(`Import failed: ${error.message}`);
+    }
+  }, [loadData]);
+
   // Render content based on current screen
   const renderContent = () => {
     switch (currentScreen) {
@@ -181,6 +229,17 @@ function App() {
           />
         );
 
+      case SCREENS.DATA_SOURCES:
+        return (
+          <DataSourceList
+            dataSources={dataSources}
+            onSave={handleSaveDataSource}
+            onDelete={handleDeleteDataSource}
+            onExport={handleExportDataSources}
+            onImport={handleImportDataSources}
+          />
+        );
+
       case SCREENS.WELCOME:
       default:
         return (
@@ -209,7 +268,7 @@ function App() {
         selectedCommand={selectedCommand}
         onSelectCommand={handleSelectCommand}
         onNewCommand={handleNewCommand}
-        onNewDataSource={() => { }}
+        onNewDataSource={handleNewDataSource}
         onDeleteCommand={handleDeleteCommand}
         showWelcome={showWelcome}
       >

@@ -138,19 +138,19 @@
 ### Phase 4: Data Sources Management
 
 #### 4.1 Data Sources CRUD
-- [ ] Create `DataSourceList` component
-- [ ] Create/Edit/Delete data sources
-- [ ] Data source fields: name, values (CSV format)
-- [ ] Parse CSV values (comma or sem-colon separated)
+- [x] Create `DataSourceList` component
+- [x] Create/Edit/Delete data sources
+- [x] Data source fields: name, values (CSV format)
+- [x] Parse CSV values (comma or sem-colon separated)
 
 #### 4.2 Data Source Assignment
-- [ ] Allow linking variables to global data sources
-- [ ] Show available data sources in variable configuration
-- [ ] Handle missing/deleted data sources gracefully
+- [x] Allow linking variables to global data sources
+- [x] Show available data sources in variable configuration
+- [x] Handle missing/deleted data sources gracefully
 
 #### 4.3 Data Source Import/Export
-- [ ] Export data sources as JSON
-- [ ] Import data sources from JSON
+- [x] Export data sources as JSON
+- [x] Import data sources from JSON
 
 ---
 
