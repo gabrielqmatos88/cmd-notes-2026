@@ -9,6 +9,34 @@ import NumberInput from '../inputs/NumberInput';
 import DropdownSelect from '../inputs/DropdownSelect';
 import './CommandExecutor.scss';
 
+// Format timestamp for display (same logic as useHistory)
+const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diff = now - date;
+
+  if (diff < 60000) return 'Just now';
+  if (diff < 3600000) {
+    const mins = Math.floor(diff / 60000);
+    return `${mins} min${mins > 1 ? 's' : ''} ago`;
+  }
+  if (diff < 86400000) {
+    const hours = Math.floor(diff / 3600000);
+    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  }
+  if (diff < 604800000) {
+    const days = Math.floor(diff / 86400000);
+    return `${days} day${days > 1 ? 's' : ''} ago`;
+  }
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined,
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+};
+
 function CommandExecutor({
   command,
   dataSources = [],
@@ -17,6 +45,8 @@ function CommandExecutor({
   onEdit,
   onBack,
   onShare,
+  recentHistory = [], // Last 3 history entries for this command
+  onUseRecentHistory, // Callback when clicking a recent history entry
 }) {
   // Initialize values from variable defaults or provided initial values
   const [values, setValues] = useState(() => {
@@ -30,6 +60,7 @@ function CommandExecutor({
     return defaultValues;
   });
   const [copied, setCopied] = useState(false);
+  const [copiedRecentId, setCopiedRecentId] = useState(null);
 
   // Compute generated command using useMemo
   const generatedCommand = useMemo(() => {
@@ -60,6 +91,16 @@ function CommandExecutor({
       console.error('Failed to copy:', err);
     }
   }, [generatedCommand]);
+
+  const handleCopyRecent = useCallback(async (entry) => {
+    try {
+      await navigator.clipboard.writeText(entry.generatedCommand);
+      setCopiedRecentId(entry.id);
+      setTimeout(() => setCopiedRecentId(null), 1500);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  }, []);
 
   const handleExecute = useCallback(() => {
     if (onExecute) {
@@ -94,6 +135,34 @@ function CommandExecutor({
           </button>
         </div>
       </div>
+
+      {recentHistory.length > 0 && (
+        <div className="command-executor__recent-history">
+          <h3 className="command-executor__recent-title">Recent Commands</h3>
+          <div className="command-executor__recent-grid">
+            {recentHistory.map((entry) => {
+              const isCopied = copiedRecentId === entry.id;
+              return (
+                <button
+                  key={entry.id}
+                  className={`command-executor__recent-card ${isCopied ? 'copied' : ''}`}
+                  onClick={() => handleCopyRecent(entry)}
+                  title={entry.generatedCommand}
+                >
+                  <div className="command-executor__recent-time">
+                    {isCopied ? 'Copied!' : formatTimestamp(entry.timestamp)}
+                  </div>
+                  <code className="command-executor__recent-command">
+                    {entry.generatedCommand.length > 50
+                      ? entry.generatedCommand.substring(0, 50) + '...'
+                      : entry.generatedCommand}
+                  </code>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="command-executor__body">
         <div className="command-executor__form">

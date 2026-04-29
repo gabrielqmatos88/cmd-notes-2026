@@ -1,7 +1,7 @@
 // DataSourceList Component
 // Display and manage all data sources with CRUD operations
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DataSourceForm from './DataSourceForm';
 import ConfirmModal from '../common/ConfirmModal';
 import './DataSourceList.scss';
@@ -11,11 +11,25 @@ function DataSourceList({
   onSave,
   onDelete,
   onExport,
+  startCreating = false,
+  onCreatingHandled,
 }) {
   const [selectedDataSource, setSelectedDataSource] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
+
+  // Handle startCreating prop - show creation form when triggered from sidebar
+  useEffect(() => {
+    if (startCreating) {
+      setIsCreating(true);
+      setIsEditing(false);
+      setSelectedDataSource(null);
+      if (onCreatingHandled) {
+        onCreatingHandled();
+      }
+    }
+  }, [startCreating, onCreatingHandled]);
 
   const handleEdit = (ds) => {
     setSelectedDataSource(ds);

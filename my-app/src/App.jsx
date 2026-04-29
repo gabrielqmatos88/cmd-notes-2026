@@ -33,6 +33,7 @@ function App() {
   // Data state - initialize directly from storage
   const [commands, setCommands] = useState(() => StorageService.getCommands());
   const [dataSources, setDataSources] = useState(() => StorageService.getDataSources());
+  const [history, setHistory] = useState(() => StorageService.getHistory());
 
   // UI state
   const [selectedView, setSelectedView] = useState('commands');
@@ -40,6 +41,7 @@ function App() {
   const [selectedCommand, setSelectedCommand] = useState(null);
   const [commandToDelete, setCommandToDelete] = useState(null);
   const [tempCommandData, setTempCommandData] = useState(null);
+  const [startDataSourceCreating, setStartDataSourceCreating] = useState(false);
 
   // Modal state
   const [showExportModal, setShowExportModal] = useState(false);
@@ -52,8 +54,23 @@ function App() {
   const loadData = useCallback(() => {
     const loadedCommands = StorageService.getCommands();
     const loadedDataSources = StorageService.getDataSources();
+    const loadedHistory = StorageService.getHistory();
     setCommands(loadedCommands);
     setDataSources(loadedDataSources);
+    setHistory(loadedHistory);
+  }, []);
+
+  // Get recent history for a specific command (last 3 entries)
+  const getRecentHistoryForCommand = useCallback((commandId) => {
+    return history
+      .filter(entry => entry.commandId === commandId)
+      .slice(0, 3);
+  }, [history]);
+
+  // Handle use recent history entry
+  const handleUseRecentHistory = useCallback((entry) => {
+    // Populate form with previous values
+    setTempCommandData({ _previousValues: entry.values });
   }, []);
 
   // Check for shareable link import on app mount
@@ -79,6 +96,7 @@ function App() {
   // Handle view selection
   const handleSelectView = useCallback((view) => {
     setSelectedView(view);
+    setTempCommandData(null); // Clear temp data when switching views
     if (view === 'dataSources') {
       setCurrentScreen(SCREENS.DATA_SOURCES);
     } else if (view === 'history') {
@@ -91,25 +109,29 @@ function App() {
 
   // Handle new command
   const handleNewCommand = useCallback(() => {
+    setTempCommandData(null); // Clear any stale data
     setSelectedCommand(null);
     setCurrentScreen(SCREENS.COMMAND_FORM);
   }, []);
 
   // Handle new data source
   const handleNewDataSource = useCallback(() => {
+    setStartDataSourceCreating(true);
     setCurrentScreen(SCREENS.DATA_SOURCES);
   }, []);
 
   // Handle select command (from sidebar)
   const handleSelectCommand = useCallback((command) => {
+    setTempCommandData(null); // Clear temp data when selecting command
     setSelectedCommand(command);
     setCurrentScreen(SCREENS.COMMAND_EXECUTOR);
   }, []);
 
   // Handle back to list
   const handleBackToList = useCallback(() => {
+    setTempCommandData(null);
     setSelectedCommand(null);
-    setCurrentScreen(SCREENS.COMMAND_LIST);
+    setCurrentScreen(SCREENS.WELCOME);
     loadData();
   }, [loadData]);
 
@@ -137,7 +159,7 @@ function App() {
 
   // Handle setup variables (from form)
   const handleSetupVariables = useCallback((commandData) => {
-    setTempCommandData(commandData);
+    setTempCommandData(commandData); // This clears and sets new data
     setCurrentScreen(SCREENS.VARIABLE_CONFIG);
   }, []);
 
@@ -155,11 +177,13 @@ function App() {
 
   // Handle cancel variable config
   const handleCancelVariableConfig = useCallback(() => {
+    setTempCommandData(null); // Clear temp data when cancelling
     setCurrentScreen(SCREENS.COMMAND_FORM);
   }, []);
 
   // Handle edit command
   const handleEditCommand = useCallback(() => {
+    setTempCommandData(null); // Clear temp data when editing
     setCurrentScreen(SCREENS.COMMAND_FORM);
   }, []);
 
@@ -191,6 +215,8 @@ function App() {
       values: execution.values,
       generatedCommand: execution.generatedCommand,
     });
+    // Refresh history so recent commands list updates
+    setHistory(StorageService.getHistory());
   }, []);
 
   // Data Source handlers
@@ -289,6 +315,8 @@ function App() {
             onEdit={handleEditCommand}
             onBack={handleBackToList}
             onShare={handleShareCommand}
+            recentHistory={getRecentHistoryForCommand(selectedCommand?.id)}
+            onUseRecentHistory={handleUseRecentHistory}
           />
         );
 
@@ -300,6 +328,8 @@ function App() {
             onDelete={handleDeleteDataSource}
             onExport={handleExportDataSources}
             onImport={handleImportDataSources}
+            startCreating={startDataSourceCreating}
+            onCreatingHandled={() => setStartDataSourceCreating(false)}
           />
         );
 

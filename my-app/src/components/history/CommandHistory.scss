@@ -6,8 +6,6 @@
 
 .history-view {
   padding: $space-lg;
-  max-width: 800px;
-  margin: 0 auto;
 
   &__header {
     @include flex-between;
@@ -135,49 +133,62 @@
   }
 
   &__list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: $space-md;
   }
 
   &__entry {
-    background: $bg-secondary;
+    background: $bg-primary;
+    border: 1px solid $border-light;
     border-radius: $radius-lg;
-    padding: $space-lg;
-    transition: all $transition-fast;
+    padding: $space-md;
+    box-shadow: $shadow-sm;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
-      background: $bg-tertiary;
+      border-color: $primary;
+      box-shadow: $shadow-md;
     }
   }
 
   &__entry-header {
-    @include flex-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: $space-sm;
+    gap: $space-sm;
   }
 
   &__entry-command {
     font-weight: $font-weight-semibold;
     color: $text-primary;
-    font-size: $font-size-sm;
+    font-size: $font-size-base;
+    word-break: break-word;
   }
 
   &__entry-time {
     font-size: $font-size-xs;
     color: $text-muted;
+    flex-shrink: 0;
   }
 
   &__entry-command-output {
-    background: $bg-primary;
+    background: $bg-secondary;
     border-radius: $radius-md;
-    padding: $space-md;
-    margin-bottom: $space-md;
+    padding: $space-sm $space-md;
+    margin-bottom: $space-sm;
     overflow-x: auto;
+    flex-grow: 1;
+    max-height: 80px;
+    overflow-y: auto;
 
     code {
       font-family: $font-family-base;
-      font-size: $font-size-sm;
-      color: $text-primary;
+      font-size: $font-size-xs;
+      color: $text-secondary;
       white-space: pre-wrap;
       word-break: break-all;
     }
@@ -186,8 +197,7 @@
   &__entry-actions {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: $space-sm;
+    gap: $space-xs;
     flex-wrap: wrap;
   }
 

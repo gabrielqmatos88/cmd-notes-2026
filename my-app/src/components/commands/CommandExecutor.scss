@@ -119,4 +119,73 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  // Recent history section
+  &__recent-history {
+    margin-bottom: vars.$space-xl;
+  }
+
+  &__recent-title {
+    margin: 0 0 vars.$space-md 0;
+    font-size: vars.$font-size-lg;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$text-primary;
+  }
+
+  &__recent-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: vars.$space-md;
+
+    @include mix.tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mix.mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__recent-card {
+    @include mix.button-reset;
+    background: vars.$bg-secondary;
+    border: 1px solid vars.$border-light;
+    border-radius: vars.$radius-md;
+    padding: vars.$space-sm vars.$space-md;
+    text-align: left;
+    cursor: pointer;
+    transition: all vars.$transition-fast;
+    display: flex;
+    flex-direction: column;
+    gap: vars.$space-xs;
+
+    &:hover {
+      border-color: vars.$primary;
+      background: vars.$bg-tertiary;
+    }
+
+    &.copied {
+      background: rgba(vars.$success, 0.15);
+      border-color: vars.$success;
+
+      .command-executor__recent-time {
+        color: vars.$success;
+      }
+    }
+  }
+
+  &__recent-time {
+    font-size: vars.$font-size-xs;
+    color: vars.$text-muted;
+  }
+
+  &__recent-command {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: vars.$font-size-xs;
+    color: vars.$text-secondary;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
