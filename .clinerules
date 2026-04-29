@@ -1,0 +1,10 @@
+# Project Rules for CMD-Notes
+
+You are an AI assistant working on the CMD-Notes project.
+You must strictly follow the styling and development guidelines specified in the `.agents/styles.md` file.
+
+**CRITICAL SASS/SCSS RULE:**
+1. NEVER use `@import` in SCSS/Sass files. It is deprecated.
+2. ALWAYS use `@use` with explicit namespaces (e.g., `@use '../../styles/variables' as *;` or `@use '../../styles/variables' as vars;`).
+3. Only use variables explicitly defined in `_variables.scss`. Never invent or assume variable names.
+4. Check `.agents/styles.md` for a comprehensive list of available variables, mixins, and SCSS structure rules before writing or modifying any styles.

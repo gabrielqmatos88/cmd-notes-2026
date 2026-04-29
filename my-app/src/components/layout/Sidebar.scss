@@ -1,0 +1,57 @@
+@use '../../styles/variables' as *;
+
+.sidebar {
+  width: 280px;
+  height: calc(100vh - 2rem);
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  z-index: 10;
+}
+
+.sidebar-brand {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $color-border;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, $color-primary, $color-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.sidebar-nav {
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  li {
+    a {
+      display: block;
+      padding: 0.75rem 1rem;
+      border-radius: $radius-sm;
+      color: $color-text-muted;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: $color-text-main;
+      }
+    }
+
+    &.active a {
+      background: rgba(59, 130, 246, 0.1);
+      color: $color-primary;
+      border-left: 3px solid $color-primary;
+    }
+  }
+}
