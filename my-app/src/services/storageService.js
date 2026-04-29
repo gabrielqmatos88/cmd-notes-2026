@@ -290,13 +290,13 @@ class StorageService {
       // Merge commands (avoid duplicates by id)
       const existingCommands = this.getCommands();
       const existingIds = new Set(existingCommands.map((c) => c.id));
-      const newCommands = data.commands.filter((c) => !existingIds.has(c.id));
+      const newCommands = (data.commands || []).filter((c) => !existingIds.has(c.id));
       saveToStorage(StorageKeys.COMMANDS, [...existingCommands, ...newCommands]);
 
       // Merge data sources
       const existingDS = this.getDataSources();
       const existingDSIds = new Set(existingDS.map((ds) => ds.id));
-      const newDS = data.dataSources.filter((ds) => !existingDSIds.has(ds.id));
+      const newDS = (data.dataSources || []).filter((ds) => !existingDSIds.has(ds.id));
       saveToStorage(StorageKeys.DATA_SOURCES, [...existingDS, ...newDS]);
     } else {
       // Replace all data

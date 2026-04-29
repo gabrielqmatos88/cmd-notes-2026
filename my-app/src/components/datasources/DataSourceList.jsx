@@ -11,13 +11,11 @@ function DataSourceList({
   onSave,
   onDelete,
   onExport,
-  onImport,
 }) {
   const [selectedDataSource, setSelectedDataSource] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
-  const [isImporting, setIsImporting] = useState(false);
 
   const handleEdit = (ds) => {
     setSelectedDataSource(ds);
@@ -55,30 +53,6 @@ function DataSourceList({
     }
   };
 
-  const handleImport = (data) => {
-    if (onImport) {
-      onImport(data);
-    }
-    setIsImporting(false);
-  };
-
-  const handleFileImport = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const data = JSON.parse(event.target.result);
-        handleImport(data);
-      } catch (err) {
-        alert('Invalid JSON file. Please select a valid data source export file.');
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = ''; // Reset input
-  };
-
   // Show form if creating or editing
   if (isCreating || isEditing) {
     return (
@@ -98,18 +72,6 @@ function DataSourceList({
       <div className="datasource-list__header">
         <h2 className="datasource-list__title">Data Sources</h2>
         <div className="datasource-list__actions">
-          <button
-            className="btn btn--secondary btn--sm"
-            onClick={() => setIsImporting(true)}
-            title="Import data sources"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="17 8 12 3 7 8" />
-              <line x1="12" y1="3" x2="12" y2="15" />
-            </svg>
-            Import
-          </button>
           <button
             className="btn btn--secondary btn--sm"
             onClick={handleExport}
@@ -201,53 +163,17 @@ function DataSourceList({
         </div>
       )}
 
-      {/* Import Modal */}
-      {isImporting && (
-        <div className="datasource-list__import-modal">
-          <div className="datasource-list__import-content">
-            <h3>Import Data Sources</h3>
-            <p>Select a JSON file to import data sources, or paste the JSON content:</p>
-            <div className="datasource-list__import-options">
-              <label className="datasource-list__import-file">
-                <input type="file" accept=".json" onChange={handleFileImport} />
-                <span>Choose File</span>
-              </label>
-              <span className="datasource-list__import-or">or</span>
-              <button
-                className="btn btn--secondary"
-                onClick={() => {
-                  const json = prompt('Paste JSON data:');
-                  if (json) {
-                    try {
-                      handleImport(JSON.parse(json));
-                    } catch (err) {
-                      alert('Invalid JSON format');
-                    }
-                  }
-                }}
-              >
-                Paste JSON
-              </button>
-            </div>
-            <button
-              className="datasource-list__import-cancel"
-              onClick={() => setIsImporting(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Delete Confirmation Modal */}
       {deleteTarget && (
         <ConfirmModal
+          isOpen={!!deleteTarget}
           title="Delete Data Source"
           message={`Are you sure you want to delete "${deleteTarget.name}"? This action cannot be undone.`}
           confirmText="Delete"
           confirmVariant="danger"
           onConfirm={confirmDelete}
           onCancel={() => setDeleteTarget(null)}
+          onClose={() => setDeleteTarget(null)}
         />
       )}
     </div>
