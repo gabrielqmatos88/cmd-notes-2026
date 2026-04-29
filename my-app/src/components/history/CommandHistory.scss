@@ -1,0 +1,259 @@
+// CommandHistory Component Styles
+// Styles for command history view
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.history-view {
+  padding: $space-lg;
+  max-width: 800px;
+  margin: 0 auto;
+
+  &__header {
+    @include flex-between;
+    margin-bottom: $space-lg;
+    flex-wrap: wrap;
+    gap: $space-md;
+  }
+
+  &__title-row {
+    @include flex-between;
+    gap: $space-md;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin: 0;
+  }
+
+  &__settings-btn {
+    @include button-reset;
+    @include flex-center;
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $bg-tertiary;
+      color: $text-primary;
+    }
+  }
+
+  &__clear-btn {
+    @include button-secondary;
+    font-size: $font-size-sm;
+  }
+
+  &__settings-panel {
+    background: $bg-secondary;
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    margin-bottom: $space-lg;
+    animation: slideDown 0.2s ease-out;
+  }
+
+  &__setting-item {
+    margin-bottom: $space-lg;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__setting-label {
+    @include flex-between;
+    gap: $space-sm;
+    cursor: pointer;
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: $primary;
+    }
+  }
+
+  &__setting-hint {
+    font-size: $font-size-sm;
+    color: $text-muted;
+    margin: $space-xs 0 0;
+    padding-left: 26px;
+  }
+
+  &__number-input {
+    width: 60px;
+    padding: $space-xs $space-sm;
+    border: 1px solid $border-light;
+    border-radius: $radius-sm;
+    font-size: $font-size-sm;
+    background: $bg-primary;
+    color: $text-primary;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+    }
+  }
+
+  &__empty {
+    @include flex-center;
+    flex-direction: column;
+    text-align: center;
+    padding: $space-2xl $space-lg;
+    color: $text-secondary;
+  }
+
+  &__empty-icon {
+    @include flex-center;
+    width: 80px;
+    height: 80px;
+    background: $bg-secondary;
+    border-radius: 50%;
+    margin-bottom: $space-lg;
+    color: $text-muted;
+  }
+
+  &__empty-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin: 0 0 $space-sm;
+  }
+
+  &__empty-description {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin: 0;
+    max-width: 300px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__entry {
+    background: $bg-secondary;
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $bg-tertiary;
+    }
+  }
+
+  &__entry-header {
+    @include flex-between;
+    margin-bottom: $space-sm;
+  }
+
+  &__entry-command {
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    font-size: $font-size-sm;
+  }
+
+  &__entry-time {
+    font-size: $font-size-xs;
+    color: $text-muted;
+  }
+
+  &__entry-command-output {
+    background: $bg-primary;
+    border-radius: $radius-md;
+    padding: $space-md;
+    margin-bottom: $space-md;
+    overflow-x: auto;
+
+    code {
+      font-family: $font-family-base;
+      font-size: $font-size-sm;
+      color: $text-primary;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  }
+
+  &__entry-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $space-sm;
+    flex-wrap: wrap;
+  }
+
+  &__action-btn {
+    @include button-reset;
+    @include flex-center;
+    gap: $space-xs;
+    padding: $space-xs $space-sm;
+    border-radius: $radius-md;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+    background: $bg-primary;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $bg-tertiary;
+      color: $text-primary;
+    }
+
+    &.copied {
+      background: rgba($success, 0.15);
+      color: $success;
+    }
+
+    &--secondary {
+      color: $primary;
+
+      &:hover {
+        background: rgba($primary, 0.1);
+      }
+    }
+
+    &--danger {
+      color: $danger;
+
+      &:hover {
+        background: rgba($danger, 0.1);
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive
+@include mobile {
+  .history-view {
+    padding: $space-md;
+
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__entry-actions {
+      justify-content: flex-start;
+    }
+  }
+}

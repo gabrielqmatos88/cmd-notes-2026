@@ -1,15 +1,21 @@
 // CMD-Notes Application
 // Main application component
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import AppLayout from './components/layout/AppLayout';
 import CommandForm from './components/commands/CommandForm';
 import VariableConfig from './components/commands/VariableConfig';
 import CommandExecutor from './components/commands/CommandExecutor';
 import DataSourceList from './components/datasources/DataSourceList';
+import CommandHistory from './components/history/CommandHistory';
 import ConfirmModal from './components/common/ConfirmModal';
 import EmptyState from './components/common/EmptyState';
+import ExportModal from './components/modals/ExportModal';
+import ImportModal from './components/modals/ImportModal';
+import ShareLinkModal from './components/modals/ShareLinkModal';
+import ShareLinkImport from './components/modals/ShareLinkImport';
 import StorageService from './services/storageService';
+import { parseUrlForImport } from './utils/urlEncoder';
 import './styles/main.scss';
 
 // Screen types
@@ -20,6 +26,7 @@ const SCREENS = {
   VARIABLE_CONFIG: 'variableConfig',
   COMMAND_EXECUTOR: 'commandExecutor',
   DATA_SOURCES: 'dataSources',
+  HISTORY: 'history',
 };
 
 function App() {
@@ -34,6 +41,13 @@ function App() {
   const [commandToDelete, setCommandToDelete] = useState(null);
   const [tempCommandData, setTempCommandData] = useState(null);
 
+  // Modal state
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareCommand, setShareCommand] = useState(null);
+  const [showShareLinkImport, setShowShareLinkImport] = useState(false);
+
   // Load data from storage
   const loadData = useCallback(() => {
     const loadedCommands = StorageService.getCommands();
@@ -42,11 +56,33 @@ function App() {
     setDataSources(loadedDataSources);
   }, []);
 
+  // Check for shareable link import on app mount
+  useEffect(() => {
+    const importData = parseUrlForImport();
+    if (importData && importData.name && importData.template) {
+      setShowShareLinkImport(true);
+    }
+  }, []);
+
+  // Handle import from shareable link
+  const handleImportFromShareLink = useCallback((data) => {
+    try {
+      const savedCommand = StorageService.importFromShareLink(data);
+      loadData();
+      setSelectedCommand(savedCommand);
+      setCurrentScreen(SCREENS.COMMAND_EXECUTOR);
+    } catch (error) {
+      alert(`Import failed: ${error.message}`);
+    }
+  }, [loadData]);
+
   // Handle view selection
   const handleSelectView = useCallback((view) => {
     setSelectedView(view);
     if (view === 'dataSources') {
       setCurrentScreen(SCREENS.DATA_SOURCES);
+    } else if (view === 'history') {
+      setCurrentScreen(SCREENS.HISTORY);
     } else {
       setCurrentScreen(SCREENS.WELCOME);
     }
@@ -194,6 +230,31 @@ function App() {
     }
   }, [loadData]);
 
+  // Handle "Use Again" from history
+  const handleUseAgain = useCallback((command, previousValues) => {
+    setSelectedCommand(command);
+    // Store previous values to pre-fill the executor
+    setTempCommandData({ _previousValues: previousValues });
+    setCurrentScreen(SCREENS.COMMAND_EXECUTOR);
+  }, []);
+
+  // Handle share command
+  const handleShareCommand = useCallback((command) => {
+    setShareCommand(command);
+    setShowShareModal(true);
+  }, []);
+
+  // Handle import data
+  const handleImportData = useCallback((data, merge) => {
+    try {
+      StorageService.importAll({ ...data, version: 1 }, merge);
+      loadData();
+      alert('Import successful!');
+    } catch (error) {
+      alert(`Import failed: ${error.message}`);
+    }
+  }, [loadData]);
+
   // Render content based on current screen
   const renderContent = () => {
     switch (currentScreen) {
@@ -223,9 +284,11 @@ function App() {
           <CommandExecutor
             command={selectedCommand}
             dataSources={dataSources}
+            initialValues={tempCommandData?._previousValues}
             onExecute={handleExecuteCommand}
             onEdit={handleEditCommand}
             onBack={handleBackToList}
+            onShare={handleShareCommand}
           />
         );
 
@@ -237,6 +300,13 @@ function App() {
             onDelete={handleDeleteDataSource}
             onExport={handleExportDataSources}
             onImport={handleImportDataSources}
+          />
+        );
+
+      case SCREENS.HISTORY:
+        return (
+          <CommandHistory
+            onUseAgain={handleUseAgain}
           />
         );
 
@@ -270,6 +340,9 @@ function App() {
         onNewCommand={handleNewCommand}
         onNewDataSource={handleNewDataSource}
         onDeleteCommand={handleDeleteCommand}
+        onShareCommand={handleShareCommand}
+        onExport={() => setShowExportModal(true)}
+        onImport={() => setShowImportModal(true)}
         showWelcome={showWelcome}
       >
         {renderContent()}
@@ -283,6 +356,34 @@ function App() {
         message={`Are you sure you want to delete "${commandToDelete?.name}"? This action cannot be undone.`}
         confirmText="Delete"
         type="danger"
+      />
+
+      <ExportModal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        commands={commands}
+        dataSources={dataSources}
+      />
+
+      <ImportModal
+        isOpen={showImportModal}
+        onClose={() => setShowImportModal(false)}
+        onImport={handleImportData}
+      />
+
+      <ShareLinkModal
+        isOpen={showShareModal}
+        onClose={() => {
+          setShowShareModal(false);
+          setShareCommand(null);
+        }}
+        command={shareCommand}
+      />
+
+      <ShareLinkImport
+        isOpen={showShareLinkImport}
+        onClose={() => setShowShareLinkImport(false)}
+        onImport={handleImportFromShareLink}
       />
     </>
   );

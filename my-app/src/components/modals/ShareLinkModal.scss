@@ -1,0 +1,366 @@
+// ShareLinkModal Styles
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// Modal Overlay (base styles)
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-modal-backdrop;
+  animation: fadeIn $transition-fast;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Modal Box (base styles)
+.modal {
+  background-color: $bg-primary;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+  z-index: $z-modal;
+  animation: slideUp $transition-normal;
+
+  &__header {
+    padding: $space-lg;
+    border-bottom: 1px solid $border-light;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+
+  &__body {
+    padding: $space-lg;
+  }
+
+  &__message {
+    margin: 0;
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+
+  &__footer {
+    padding: $space-lg;
+    border-top: 1px solid $border-light;
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-sm;
+  }
+
+  &--sm {
+    max-width: 400px;
+  }
+
+  &--lg {
+    max-width: 700px;
+  }
+
+  &--full {
+    max-width: 95%;
+    width: 95%;
+    height: 90vh;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ShareLinkModal specific styles
+.share-link-modal {
+  &__close {
+    @include button-reset;
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $bg-tertiary;
+      color: $text-primary;
+    }
+  }
+
+  &__command-info {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-md;
+    padding: $space-lg;
+    background: $bg-secondary;
+    border-radius: $radius-lg;
+    margin-bottom: $space-lg;
+  }
+
+  &__command-icon {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    background: rgba($primary, 0.1);
+    border-radius: $radius-md;
+    color: $primary;
+    flex-shrink: 0;
+  }
+
+  &__command-details {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    min-width: 0;
+  }
+
+  &__command-name {
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    font-size: $font-size-lg;
+  }
+
+  &__command-template {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    font-family: $font-family-base;
+    word-break: break-all;
+  }
+
+  &__url-section {
+    margin-bottom: $space-lg;
+  }
+
+  &__label {
+    display: block;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+    margin-bottom: $space-sm;
+  }
+
+  &__url-box {
+    display: flex;
+    gap: $space-sm;
+  }
+
+  &__url-input {
+    @include input-base;
+    flex: 1;
+    background: $bg-secondary;
+    font-size: $font-size-sm;
+    padding: $space-sm $space-md;
+  }
+
+  &__copy-btn {
+    @include button-primary;
+    padding: $space-sm $space-lg;
+    white-space: nowrap;
+
+    &.copied {
+      background: $success;
+
+      &:hover {
+        background: $success-dark;
+      }
+    }
+  }
+
+  &__length-warning {
+    padding: $space-md;
+    border-radius: $radius-md;
+    margin-bottom: $space-lg;
+
+    &.warning {
+      background: rgba($warning, 0.1);
+      border: 1px solid rgba($warning, 0.3);
+
+      .share-link-modal__length-fill {
+        background: $warning;
+      }
+
+      .share-link-modal__length-info {
+        color: $warning-dark;
+
+        svg {
+          color: $warning;
+        }
+      }
+    }
+
+    &.ok {
+      background: rgba($success, 0.1);
+      border: 1px solid rgba($success, 0.3);
+
+      .share-link-modal__length-fill {
+        background: $success;
+      }
+
+      .share-link-modal__length-info {
+        color: $success-dark;
+
+        svg {
+          color: $success;
+        }
+      }
+    }
+  }
+
+  &__length-bar {
+    height: 4px;
+    background: $bg-tertiary;
+    border-radius: $radius-full;
+    margin-bottom: $space-sm;
+    overflow: hidden;
+  }
+
+  &__length-fill {
+    height: 100%;
+    border-radius: $radius-full;
+    transition: width $transition-normal;
+  }
+
+  &__length-info {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-size: $font-size-sm;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__instructions {
+    background: $bg-secondary;
+    border-radius: $radius-md;
+    padding: $space-lg;
+
+    h4 {
+      margin: 0 0 $space-md;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $text-primary;
+    }
+
+    ol {
+      margin: 0;
+      padding-left: $space-lg;
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      line-height: 1.8;
+
+      li {
+        margin-bottom: $space-xs;
+      }
+    }
+  }
+
+  &__json-section {
+    margin-top: $space-lg;
+    border-top: 1px solid $border-light;
+    padding-top: $space-lg;
+  }
+
+  &__json-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-md;
+    flex-wrap: wrap;
+    gap: $space-sm;
+  }
+
+  &__json-buttons {
+    display: flex;
+    gap: $space-sm;
+  }
+
+  &__json-btn {
+    @include button-secondary;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: $space-xs $space-md;
+    font-size: $font-size-sm;
+
+    &.copied {
+      background: $success;
+      color: $text-inverse;
+
+      &:hover {
+        background: $success-dark;
+      }
+    }
+
+    &--download {
+      background: $primary;
+      color: $text-inverse;
+
+      &:hover {
+        background: $primary-dark;
+      }
+    }
+  }
+
+  &__json-preview {
+    background: $bg-tertiary;
+    border: 1px solid $border-light;
+    border-radius: $radius-md;
+    padding: $space-md;
+    font-family: $font-family-base;
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    overflow-x: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+@include mobile {
+  .share-link-modal {
+    &__command-info {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    &__url-box {
+      flex-direction: column;
+    }
+
+    &__copy-btn {
+      width: 100%;
+    }
+  }
+}

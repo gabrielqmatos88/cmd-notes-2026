@@ -157,44 +157,44 @@
 ### Phase 5: Command History
 
 #### 5.1 History Management
-- [ ] Create `CommandHistory` component
-- [ ] Store last 5 generated commands (configurable)
-- [ ] Display history entries with timestamp
-- [ ] Add "Copy" option for history entries
-- [ ] Add "Use Again" option (reopen command with previous values)
+- [x] Create `CommandHistory` component
+- [x] Store last 5 generated commands (configurable)
+- [x] Display history entries with timestamp
+- [x] Add "Copy" option for history entries
+- [x] Add "Use Again" option (reopen command with previous values)
 
 #### 5.2 History Settings
-- [ ] Add toggle to enable/disable history
-- [ ] Add "Clear History" button
-- [ ] Persist settings in localStorage
+- [x] Add toggle to enable/disable history
+- [x] Add "Clear History" button
+- [x] Persist settings in localStorage
 
 ---
 
 ### Phase 6: Import/Export & Sharing
 
 #### 6.1 JSON Export
-- [ ] Create `ExportModal` component
-- [ ] Export single command
-- [ ] Export multiple selected commands
-- [ ] Export all commands with data sources (no history)
-- [ ] Export data sources only
-- [ ] Generate downloadable JSON file
+- [x] Create `ExportModal` component
+- [x] Export single command
+- [x] Export multiple selected commands
+- [x] Export all commands with data sources (no history)
+- [x] Export data sources only
+- [x] Generate downloadable JSON file
 
 #### 6.2 JSON Import
-- [ ] Create `ImportModal` component
-- [ ] Support file drag & drop
-- [ ] Support file picker
-- [ ] Support copy/paste JSON
-- [ ] Validate imported data structure
-- [ ] Handle conflicts (duplicate names/IDs)
-- [ ] Merge or replace options
+- [x] Create `ImportModal` component
+- [x] Support file drag & drop
+- [x] Support file picker
+- [x] Support copy/paste JSON
+- [x] Validate imported data structure
+- [x] Handle conflicts (duplicate names/IDs)
+- [x] Merge or replace options
 
 #### 6.3 Shareable Links
-- [ ] Create `ShareLinkModal` component
-- [ ] Encode single command to URL-safe string
-- [ ] Handle URL length limitations (>2000 chars warning)
-- [ ] Copy shareable link to clipboard
-- [ ] Create import page to parse shareable links
+- [x] Create `ShareLinkModal` component
+- [x] Encode single command to URL-safe string
+- [x] Handle URL length limitations (>2000 chars warning)
+- [x] Copy shareable link to clipboard
+- [x] Create import page to parse shareable links
 
 ---
 

@@ -437,6 +437,39 @@ class StorageService {
 
     return hasChanges;
   }
+
+  // ============ Share Link Import ============
+
+  /**
+   * Import a command from a shareable link
+   * @param {Object} data - Command data from shareable link
+   * @returns {Object} The saved command with new ID
+   */
+  static importFromShareLink(data) {
+    if (!data || !data.name || !data.template) {
+      throw new Error('Invalid command data: missing name or template');
+    }
+
+    const now = Date.now();
+
+    // Create a new command with a fresh ID
+    const newCommand = {
+      id: generateId(),
+      name: data.name,
+      description: data.description || '',
+      template: data.template,
+      variables: data.variables || [],
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    // Save the command
+    const commands = this.getCommands();
+    commands.push(newCommand);
+    saveToStorage(StorageKeys.COMMANDS, commands);
+
+    return newCommand;
+  }
 }
 
 export default StorageService;

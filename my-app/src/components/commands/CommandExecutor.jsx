@@ -12,17 +12,22 @@ import './CommandExecutor.scss';
 function CommandExecutor({
   command,
   dataSources = [],
+  initialValues = null, // Optional pre-filled values from history "Use Again"
   onExecute, // Callback when command is executed (for history)
   onEdit,
   onBack,
+  onShare,
 }) {
-  // Initialize values from variable defaults using useMemo to avoid effect cascade
+  // Initialize values from variable defaults or provided initial values
   const [values, setValues] = useState(() => {
-    const initialValues = {};
+    if (initialValues) {
+      return initialValues;
+    }
+    const defaultValues = {};
     command.variables?.forEach((variable) => {
-      initialValues[variable.name] = variable.defaultValue ?? '';
+      defaultValues[variable.name] = variable.defaultValue ?? '';
     });
-    return initialValues;
+    return defaultValues;
   });
   const [copied, setCopied] = useState(false);
 
@@ -80,6 +85,9 @@ function CommandExecutor({
         <div className="command-executor__header-actions">
           <button className="btn btn--secondary btn--sm" onClick={onEdit}>
             Edit
+          </button>
+          <button className="btn btn--secondary btn--sm" onClick={() => onShare && onShare(command)}>
+            Share
           </button>
           <button className="btn btn--secondary btn--sm" onClick={onBack}>
             Back

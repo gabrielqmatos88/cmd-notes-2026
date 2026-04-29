@@ -96,6 +96,32 @@
     margin: 0 $space-md;
   }
 
+  &__actions {
+    display: flex;
+    gap: $space-sm;
+    padding: $space-sm $space-md;
+  }
+
+  &__action-btn {
+    @include button-secondary;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: $space-xs $space-md;
+    font-size: $font-size-xs;
+    flex: 1;
+    justify-content: center;
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: $primary;
+      color: $text-inverse;
+    }
+  }
+
   &__search {
     position: relative;
     padding: $space-sm $space-md;

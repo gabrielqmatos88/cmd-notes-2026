@@ -15,6 +15,10 @@ function AppLayout({
   onSelectCommand,
   onNewCommand,
   onNewDataSource,
+  onDeleteCommand,
+  onShareCommand,
+  onExport,
+  onImport,
   children,
   showWelcome = false
 }) {
@@ -36,6 +40,10 @@ function AppLayout({
           onSelectCommand={onSelectCommand}
           onNewCommand={onNewCommand}
           onNewDataSource={onNewDataSource}
+          onDeleteCommand={onDeleteCommand}
+          onShareCommand={onShareCommand}
+          onExport={onExport}
+          onImport={onImport}
           isOpen={sidebarOpen}
           onClose={closeSidebar}
         />

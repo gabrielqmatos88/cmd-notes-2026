@@ -1,18 +1,21 @@
 // CommandExecutor Styles
-@use '../../styles/variables' as *;
-@use '../../styles/mixins' as *;
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
 
 .command-executor {
-  @include card;
-  padding: $space-xl;
+  @include mix.card;
+  padding: vars.$space-xl;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   &__header {
-    @include flex-between;
-    gap: $space-md;
-    margin-bottom: $space-xl;
+    @include mix.flex-between;
+    gap: vars.$space-md;
+    margin-bottom: vars.$space-xl;
     flex-wrap: wrap;
 
-    @include mobile {
+    @include mix.mobile {
       flex-direction: column;
       align-items: flex-start;
     }
@@ -25,28 +28,34 @@
 
   &__title {
     margin: 0;
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-semibold;
-    color: $text-primary;
+    font-size: vars.$font-size-2xl;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$text-primary;
   }
 
   &__description {
-    margin: $space-xs 0 0 0;
-    color: $text-secondary;
-    font-size: $font-size-sm;
+    margin: vars.$space-xs 0 0 0;
+    color: vars.$text-secondary;
+    font-size: vars.$font-size-sm;
   }
 
   &__header-actions {
     display: flex;
-    gap: $space-sm;
+    gap: vars.$space-sm;
   }
 
   &__body {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $space-xl;
+    grid-template-columns: 1.5fr 1fr;
+    gap: vars.$space-xl;
+    flex: 1;
+    min-height: 0;
 
-    @include mobile {
+    @include mix.tablet {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include mix.mobile {
       grid-template-columns: 1fr;
     }
   }
@@ -54,7 +63,7 @@
   &__form {
     display: flex;
     flex-direction: column;
-    gap: $space-lg;
+    gap: vars.$space-lg;
   }
 
   &__field {
@@ -62,40 +71,40 @@
   }
 
   &__no-variables {
-    padding: $space-lg;
+    padding: vars.$space-lg;
     text-align: center;
-    color: $text-muted;
-    background-color: $bg-secondary;
-    border-radius: $radius-md;
+    color:  vars.$text-muted;
+    background-color: vars.$bg-secondary;
+    border-radius: vars.$radius-md;
   }
 
   &__preview {
     position: sticky;
-    top: $space-md;
+    top: vars.$space-md;
     align-self: start;
   }
 
   &__preview-header {
-    margin-bottom: $space-md;
+    margin-bottom: vars.$space-md;
   }
 
   &__preview-title {
     margin: 0;
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-    color: $text-primary;
+    font-size: vars.$font-size-lg;
+    font-weight: vars.$font-weight-semibold;
+    color: vars.$text-primary;
   }
 
   &__preview-box {
-    background-color: $bg-dark;
-    border-radius: $radius-md;
-    padding: $space-md;
+    background-color: vars.$bg-dark;
+    border-radius: vars.$radius-md;
+    padding: vars.$space-md;
     min-height: 100px;
-    border: 1px solid $border-dark;
+    border: 1px solid vars.$border-dark;
 
     code {
       font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-      font-size: $font-size-sm;
+      font-size: vars.$font-size-sm;
       color: #e2e8f0;  // Light slate for better visibility on dark bg
       word-break: break-all;
       white-space: pre-wrap;
@@ -106,7 +115,7 @@
   }
 
   &__preview-actions {
-    margin-top: $space-md;
+    margin-top: vars.$space-md;
     display: flex;
     justify-content: flex-end;
   }

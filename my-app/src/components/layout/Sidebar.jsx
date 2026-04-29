@@ -13,6 +13,9 @@ function Sidebar({
   onNewCommand,
   onNewDataSource,
   onDeleteCommand,
+  onShareCommand,
+  onExport,
+  onImport,
   selectedCommand,
   isOpen = true,
   onClose
@@ -141,6 +144,27 @@ function Sidebar({
           </button>
         ))}
       </nav>
+
+      <div className="sidebar__divider" />
+
+      <div className="sidebar__actions">
+        <button className="sidebar__action-btn" onClick={onExport} title="Export data">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Export
+        </button>
+        <button className="sidebar__action-btn" onClick={onImport} title="Import data">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          Import
+        </button>
+      </div>
 
       <div className="sidebar__divider" />
 

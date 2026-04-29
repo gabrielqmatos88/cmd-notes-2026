@@ -1,0 +1,303 @@
+// ImportModal Styles
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// Modal Overlay (base styles)
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-modal-backdrop;
+  animation: fadeIn $transition-fast;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Modal Box (base styles)
+.modal {
+  background-color: $bg-primary;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+  z-index: $z-modal;
+  animation: slideUp $transition-normal;
+
+  &__header {
+    padding: $space-lg;
+    border-bottom: 1px solid $border-light;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+
+  &__body {
+    padding: $space-lg;
+  }
+
+  &__message {
+    margin: 0;
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+
+  &__footer {
+    padding: $space-lg;
+    border-top: 1px solid $border-light;
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-sm;
+  }
+
+  &--sm {
+    max-width: 400px;
+  }
+
+  &--lg {
+    max-width: 700px;
+  }
+
+  &--full {
+    max-width: 95%;
+    width: 95%;
+    height: 90vh;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ImportModal specific styles
+.import-modal {
+  &__close {
+    @include button-reset;
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $bg-tertiary;
+      color: $text-primary;
+    }
+  }
+
+  &__tabs {
+    display: flex;
+    gap: $space-sm;
+    margin-bottom: $space-lg;
+  }
+
+  &__tab {
+    @include button-base;
+    flex: 1;
+    padding: $space-sm $space-md;
+    background: $bg-secondary;
+    color: $text-secondary;
+    border: 1px solid $border-light;
+
+    &:hover {
+      background: $bg-tertiary;
+    }
+
+    &.active {
+      background: $primary;
+      color: $text-inverse;
+      border-color: $primary;
+    }
+  }
+
+  &__dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $space-2xl;
+    background: $bg-secondary;
+    border: 2px dashed $border-medium;
+    border-radius: $radius-lg;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $primary;
+      background: rgba($primary, 0.05);
+    }
+
+    &.dragging {
+      border-color: $primary;
+      background: rgba($primary, 0.1);
+    }
+  }
+
+  &__dropzone-icon {
+    color: $text-muted;
+    margin-bottom: $space-md;
+  }
+
+  &__dropzone-text {
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+    margin: 0 0 $space-xs;
+  }
+
+  &__dropzone-hint {
+    font-size: $font-size-sm;
+    color: $text-muted;
+    margin: 0;
+  }
+
+  &__text-input {
+    textarea {
+      @include input-base;
+      resize: vertical;
+      min-height: 200px;
+      font-family: $font-family-base;
+    }
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-md;
+    background: rgba($danger, 0.1);
+    border: 1px solid rgba($danger, 0.3);
+    border-radius: $radius-md;
+    color: $danger;
+    font-size: $font-size-sm;
+    margin-top: $space-md;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__preview {
+    background: $bg-secondary;
+    border-radius: $radius-md;
+    padding: $space-lg;
+    margin-top: $space-lg;
+  }
+
+  &__preview-title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+    margin: 0 0 $space-md;
+  }
+
+  &__preview-items {
+    display: flex;
+    gap: $space-lg;
+  }
+
+  &__preview-item {
+    display: flex;
+    align-items: baseline;
+    gap: $space-xs;
+  }
+
+  &__preview-count {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $primary;
+  }
+
+  &__preview-label {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+  }
+
+  &__merge-option {
+    display: flex;
+    gap: $space-md;
+    margin-top: $space-lg;
+  }
+
+  &__merge-label {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: $space-sm;
+    padding: $space-md;
+    background: $bg-secondary;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $bg-tertiary;
+    }
+
+    input[type="radio"] {
+      margin-top: 4px;
+      accent-color: $primary;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+
+  &__merge-title {
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+  }
+
+  &__merge-desc {
+    font-size: $font-size-xs;
+    color: $text-muted;
+  }
+}
+
+@include mobile {
+  .import-modal {
+    &__dropzone {
+      padding: $space-lg;
+    }
+
+    &__preview-items {
+      flex-direction: column;
+      gap: $space-md;
+    }
+
+    &__merge-option {
+      flex-direction: column;
+    }
+  }
+}
