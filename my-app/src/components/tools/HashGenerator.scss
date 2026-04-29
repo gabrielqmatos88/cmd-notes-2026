@@ -1,0 +1,188 @@
+// HashGenerator Styles
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.hash-generator {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+  width: 100%;
+
+  &__input-section {
+    @include card;
+    padding: $space-lg;
+  }
+
+  &__input-header {
+    @include flex-between;
+    margin-bottom: $space-md;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+  }
+
+  &__input {
+    @include input-base;
+    resize: vertical;
+    min-height: 120px;
+    font-family: $font-family-base;
+    line-height: $line-height-normal;
+  }
+
+  &__input-footer {
+    @include flex-between;
+    margin-top: $space-sm;
+  }
+
+  &__char-count {
+    font-size: $font-size-xs;
+    color: $text-muted;
+  }
+
+  &__clear-btn {
+    @include button-reset;
+    padding: $space-xs $space-sm;
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    border-radius: $radius-sm;
+    transition: background-color $transition-fast;
+
+    &:hover:not(:disabled) {
+      background-color: $bg-tertiary;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__output-section {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+  }
+
+  &__output {
+    @include card;
+    padding: $space-lg;
+  }
+
+  &__output-header {
+    @include flex-between;
+    margin-bottom: $space-md;
+  }
+
+  &__output-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+  }
+
+  &__output-title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+  }
+
+  &__output-warning {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $warning-dark;
+    background-color: rgba($warning, 0.1);
+    padding: 2px $space-sm;
+    border-radius: $radius-sm;
+  }
+
+  &__output-secure {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $success-dark;
+    background-color: rgba($success, 0.1);
+    padding: 2px $space-sm;
+    border-radius: $radius-sm;
+  }
+
+  &__copy-btn {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    padding: $space-xs $space-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+    background-color: $bg-tertiary;
+    border-radius: $radius-sm;
+    transition: all $transition-fast;
+
+    &:hover:not(:disabled) {
+      background-color: $border-light;
+      color: $text-primary;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &.copied {
+      background-color: rgba($success, 0.1);
+      color: $success-dark;
+    }
+  }
+
+  &__output-box {
+    @include flex-center;
+    min-height: 48px;
+    width: 100%;
+    padding: $space-md;
+    background-color: $bg-secondary;
+    border: 1px solid $border-light;
+    border-radius: $radius-md;
+    overflow-x: auto;
+  }
+
+  &__hash,
+  &__placeholder,
+  &__loading {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+    text-align: center;
+  }
+
+  &__hash {
+    color: $text-primary;
+    word-break: break-all;
+  }
+
+  &__placeholder {
+    color: $text-muted;
+  }
+
+  &__loading {
+    color: $text-secondary;
+    font-style: italic;
+  }
+}
+
+@include mobile {
+  .hash-generator {
+    &__output-section {
+      gap: $space-md;
+    }
+
+    &__output-box {
+      padding: $space-sm;
+      overflow-x: auto;
+    }
+
+    &__hash {
+      font-size: $font-size-xs;
+    }
+  }
+}

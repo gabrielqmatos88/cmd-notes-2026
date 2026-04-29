@@ -201,11 +201,11 @@
 ### Phase 7: Built-in Tools
 
 #### 7.1 Hash Generators
-- [ ] Create `Tools` section in sidebar
-- [ ] Create `MD5Generator` component
-- [ ] Create `SHA256Generator` component
-- [ ] Add text input with hash output
-- [ ] Add copy button for hash results
+- [x] Create `Tools` section in sidebar
+- [x] Create `MD5Generator` component
+- [x] Create `SHA256Generator` component
+- [x] Add text input with hash output
+- [x] Add copy button for hash results
 
 ---
 

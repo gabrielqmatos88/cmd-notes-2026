@@ -14,6 +14,7 @@ import ExportModal from './components/modals/ExportModal';
 import ImportModal from './components/modals/ImportModal';
 import ShareLinkModal from './components/modals/ShareLinkModal';
 import ShareLinkImport from './components/modals/ShareLinkImport';
+import ToolsScreen from './components/tools/ToolsScreen';
 import StorageService from './services/storageService';
 import { parseUrlForImport } from './utils/urlEncoder';
 import './styles/main.scss';
@@ -27,6 +28,7 @@ const SCREENS = {
   COMMAND_EXECUTOR: 'commandExecutor',
   DATA_SOURCES: 'dataSources',
   HISTORY: 'history',
+  TOOLS: 'tools',
 };
 
 function App() {
@@ -101,6 +103,8 @@ function App() {
       setCurrentScreen(SCREENS.DATA_SOURCES);
     } else if (view === 'history') {
       setCurrentScreen(SCREENS.HISTORY);
+    } else if (view === 'tools') {
+      setCurrentScreen(SCREENS.TOOLS);
     } else {
       setCurrentScreen(SCREENS.WELCOME);
     }
@@ -339,6 +343,9 @@ function App() {
             onUseAgain={handleUseAgain}
           />
         );
+
+      case SCREENS.TOOLS:
+        return <ToolsScreen />;
 
       case SCREENS.WELCOME:
       default:

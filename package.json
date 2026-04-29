@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "sass": "^1.99.0"
+  },
+  "dependencies": {
+    "js-md5": "^0.8.3"
   }
 }
